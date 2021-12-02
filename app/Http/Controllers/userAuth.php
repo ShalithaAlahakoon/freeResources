@@ -9,12 +9,14 @@ use App\Models\Award;
 use App\Models\resource;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\courseController;
+use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\DB;
 
 
 class userAuth extends Controller
 {
-   
+   public $userDetails;
+
     function userLogin(Request $req)
     {
         if(session()-> has('userName'))
@@ -25,49 +27,45 @@ class userAuth extends Controller
             $req->validate(
                 [
                     'email' => "required | email",
-                    'password' => "required | min:5"
+                    'password' => "required"
                 ]
             );
 
         }
-        
 
-        // return redirect("/admin");
         //retrive course data
         $course = new Course;
         $courses =$course->all();
         $rTypes = DB::table('courses')->distinct()->pluck('resource_type');
 
         //course count
-       $CourseCount = DB::table('courses')
-       ->count('id');
+        $CourseCount = DB::table('courses')->count('id');
 
         //retrive award data
         $award = new Award;
         $awards = $award->all();
         //award count
-       $AwardCount = DB::table('awards')
-       ->count('id');
+       $AwardCount = DB::table('awards')->count('id');
 
        //retrive award data
        $resource = new resource;
        $resources = $resource->all();
 
        //award count
-       $resourceCount = DB::table('resources')
-                ->count('id');
+       $resourceCount = DB::table('resources') ->count('id');
 
         //retrive user data
         $user = new User;
         $usrType =DB::table('users')->distinct()->pluck('utype');
         $usrType = DB::table('users')->where('email', $req->email)->value('utype');
         $usrName = DB::table('users')->where('email', $req->email)->value('first_name');
+        $password = DB::table('users')->where('email', $req->email)->value('password');
 
        //user count
        $userCount = DB::table('users')
                 ->count('id');
 
-        if($usrType == 'ADM')
+        if($usrType == 'ADM' && $password == $req->password)
         {
             $req->session()->put('userType',$usrType);
             $req->session()->put('userName',$usrName);
@@ -75,18 +73,25 @@ class userAuth extends Controller
 
             return view("admin",['courses'=>$courses,'awards'=>$awards,'rTypes'=>$rTypes,'AwardCount'=>$AwardCount,'CourseCount'=>$CourseCount,'ResourceCount'=>$resourceCount, 'userCount'=>$userCount]);
         }
-        else if($usrType == 'USR')
+        else if($usrType == 'USR'  && $password == $req->password)
         {
             $req->session()->put('userType',$usrType);
             $req->session()->put('userName',$usrName);
             $req->session()->put('email',$req->email);
 
+          
             return view("userView",['courses'=>$courses,'awards'=>$awards,'rTypes'=>$rTypes]);
         }
         else
         {
-            echo  "You should register first before login";
-            // echo $usrType;
+            if($password != $req->password){
+                $req->validate(
+                    [
+                        'password' => "password"
+                    ]);
+            }else{
+                echo  "You should register first before login or check your credentials";
+            }
         }
 
         
@@ -111,9 +116,18 @@ class userAuth extends Controller
         $user->password = $req ->password;
         $user->save();
 
+        $userDetails= [
+            'userMail'=>$req ->email,
+            'userName'=> $req ->firstName
+        ];
+
+        
+        $req->session()->put('userFName',$req ->firstName);
+        $req->session()->put('userMail',$req ->email);
+
          echo '<script>alert("User successfully registerd");</script>';
 
-       return view('home',['user'=>$user]);
+       return redirect('/send-email');
     }
 
 }

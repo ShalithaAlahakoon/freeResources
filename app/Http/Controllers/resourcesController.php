@@ -11,32 +11,30 @@ class resourcesController extends Controller
     {
         $data = resource::all();
         $CourseData = Course::all();
-         return view('resource',['resources'=>$data , 'CourseData'=>$CourseData]);
-        
+        return view('resource',['resources'=>$data , 'CourseData'=>$CourseData]);
     }
     
-
     function store(Request $req){
 
-        // $req->validate(
-        //     [
-        //         'name' => "required ",
-        //         'file' => "required "
-        //     ]
-        // );
+        $req->validate(
+            [
+                'name' => "required ",
+                'file' => "required | file"
+            ]
+        );
 
-            if($file = $req->file('file')){
-                $fileName = $file->getClientOriginalName();
+        if($file = $req->file('file')){
+            $fileName = $file->getClientOriginalName();
 
-                if($file->move('resource',$fileName)){
-                    $resource = new resource();
-                    $resource->name = $req -> name;
-                    $resource->url = $fileName;
-                    $resource->course_id = $req -> course;
-                    $resource->save();
-                    return redirect('resources');
+            if($file->move('resource',$fileName)){
+                $resource = new resource();
+                $resource->name = $req -> name;
+                $resource->url = $fileName;
+                $resource->course_id = $req -> course;
+                $resource->save();
+                return redirect('resources');
                 }
-            }
+        }
 
     }
     function delete($id)
@@ -54,4 +52,20 @@ class resourcesController extends Controller
         $resource->update();
         return  redirect('resources');
     }
+
+    //view all deleted records
+    function deletedResource(){
+
+        $resource = resource::select("*");
+        $resource = $resource->onlyTrashed();
+        $resource = $resource->paginate(8);
+        return view('deletedResource',['resources'=>$resource]);
+        
+    }
+    //restore specific deleted records
+    public function restore($id)
+    {
+        resource::withTrashed()->find($id)->restore();
+        return back();
+    } 
 }

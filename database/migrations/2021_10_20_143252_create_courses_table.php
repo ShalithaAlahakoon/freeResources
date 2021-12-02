@@ -19,8 +19,10 @@ class CreateCoursesTable extends Migration
             $table->string('price');
             $table->string('resource_type');
             $table->bigInteger('award_id')->unsigned();
+            $table->string('url');
             $table->timestamps();
             $table->foreign('award_id')->references('id')->on('awards')->onDelete('cascade');
+            $table->softDeletes();
         });
     }
 

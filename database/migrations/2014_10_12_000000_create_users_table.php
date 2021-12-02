@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('profile_photo_path', 2048)->nullable();
             $table->string('utype')->default('USR')->comment('USR for normal Users ADM for admins');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

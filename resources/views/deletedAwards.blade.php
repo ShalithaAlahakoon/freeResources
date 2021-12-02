@@ -37,17 +37,17 @@
             <div id="content">
                 <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
                     <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button><img style="background-image: url(&quot;https://www.globaledulink.co.uk/wp-content/uploads/2020/10/gel_log.png&quot;);background-repeat: no-repeat;background-size: contain;width: 154px;height: 54px;border: none;"></div>
-
+                    
                     <a href="/logout"><i class="fa fa-sign-out" aria-hidden="true" style="color:rgb(165,9,220);font-size: 30px;"></i></a>
                 </nav>
                 <div class="container-fluid">
                 <div class="row">
-                        <div class="col"><h3 class="text-dark mb-4">Awarding Bodies</h3></div>
-                        <div class="col"><a href="#" data-toggle="modal" data-target="#addAwardModal"><button class="btn btn-primary" style="float: right;   background-color: rgb(165,9,220);border: 0;border-radius: 50px; margin-bottom: 9px;">Add new </button></a>
-                        <a href="viewDeletedAward" ><button class="btn btn-primary" style="float: right; background-color: rgb(165,9,220);  border: 0; border-radius: 50px; margin-bottom: 9px; margin-right: 5px;">View Deleted</button></a><br></div>
-
+                        <div class="col"><h3 class="text-dark mb-4">Deleted Awarding Bodies</h3></div>
+                        <div class="col">
+                            <a href="restoreAward" ><button class="btn btn-primary" style="float: right; background-color: rgb(165,9,220);  border: 0; border-radius: 50px; margin-bottom: 9px; margin-right: 5px;">Restore all </button></a><br></div>
+                   
                     </div>
-
+                 
                     <div class="card shadow">
                         <div class="card-header py-3">
                             <p class="text-primary m-0 font-weight-bold">Infomation</p>
@@ -59,79 +59,27 @@
                                         <tr>
                                             <th>Id</th>
                                             <th>Name</th>
-                                            <th class="text-center">Edit</th>
-                                            <th class="text-center">Delete</th>
+                                            <th class="text-center">restore</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-
-                                        @foreach($awards as $award)
+                                        @foreach($Award as $award)
                                         <tr>
                                             <td>{{$award['id']}}</td>
                                             <td>{{$award['name']}}</td>
-                                            <td  class="text-center"><button class="edit " style="border: none;background-color:white;"><i class="fa fa-edit " ></i></button></td>
-                                            <td class="text-center"> <a href={{"deleteAward/".$award['id']}}><i class="fa fa-remove" ></i></a></td>
+                                            <<td class="text-center"><a href={{"restoreDeletedAward/".$award['id']}}><i class="fa fa-undo" ></i></a></td>
                                         </tr>
                                         @endforeach
                                     </tbody>
-
+                                    
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- add Award Modal -->
-            <div class="modal fade" id="addAwardModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content" style="border-radius:21px;">
-                <div class="modal-header " style=" background-color:rgb(165,9,220); color:white; border-radius: 20px 20px 0 0;">
-                    <h5 class="modal-title w-100" id="exampleModalLongTitle"  style="margin: auto; text-align: center; ">Add Award</h5>
-
-                </div>
-                <div class="modal-body">
-
-                    <form action="saveAward" method="post" >
-                        @csrf
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="name" placeholder="Award Name">
-                            <span style="color:red;"> @error('name'){{$message}} @enderror</span><br><br>
-                        </div>
-                        <div  style="margin: auto; text-align: center;">
-                            <button type="submit" class="btn btn-primary" style=" background-color: rgb(165,9,220);  border: 0; border-radius: 50px; margin-bottom: 9px;">Save</button>
-                        </div>
-                    </form>
-                </div>
-
-                </div>
-                </div>
-            </div>
-            <!-- edit Award Modal -->
-            <div class="modal fade" id="editAwardModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content" style="border-radius:21px;">
-                <div class="modal-header " style=" background-color:rgb(165,9,220); color:white; border-radius: 20px 20px 0 0;">
-                    <h5 class="modal-title w-100" id="exampleModalLongTitle"  style="margin: auto; text-align: center; ">Edit Award</h5>
-
-                </div>
-                <div class="modal-body">
-
-                    <form action="updateAward" method="post" >
-                        @csrf
-                        <div class="form-group">
-                            <input type="hidden" name="id" id="id">
-                            <input type="text" class="form-control" name="name"  id="name" placeholder="Award Name">
-                            <span style="color:red;"> @error('name'){{$message}} @enderror</span><br><br>
-                        </div>
-                        <div  style="margin: auto; text-align: center;">
-                            <button type="submit" class="btn btn-primary" style=" background-color: rgb(165,9,220);  border: 0; border-radius: 50px; margin-bottom: 9px;">Save</button>
-                        </div>
-                    </form>
-                </div>
-
-                </div>
-                </div>
-            </div>
+    
+          
             <footer class="bg-white sticky-footer">
                 <div class="container my-auto">
                     <div class="text-center my-auto copyright"><span>Copyright © Gel 2021</span></div>
@@ -146,32 +94,7 @@
     <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
-    <script>
-        $(document).ready(function(){
-
-            var table = $('#dataTable').DataTable();
-
-            table.on('click','.edit', function(){
-
-                $tr = $(this).closest('tr');
-
-                if ($($tr).hasClass('child')) {
-                    $tr = $tr.prev('.parent');
-                }
-
-
-                var data = table.row($tr).data();
-                console.log(data);
-
-                $('#id').val(data[0]);
-                $('#name').val(data[1]);
-
-                $('#editForm').attr('action','/updateAward/');
-                $('#editAwardModal').modal('show');
-
-            })
-        })
-    </script>
+    
 </body>
 
 </html>

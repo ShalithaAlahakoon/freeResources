@@ -1,40 +1,40 @@
 $(document).ready(function(){
-    $(document).on('click','.courses_checkbox',function(){
+    $(document).on('click','.resource_checkbox',function(){
 
-        var courseIds = [];
-        var courseCounter = 0;
+        var resourceIds = [];
+        var resourceCounter = 0;
 
-        $('.courses_cards').empty();
+        // $('.courses_cards').empty();
 
-        $('.courses_checkbox').each(function () {
+        $('.resource_checkbox').each(function () {
             if ($(this).is(":checked")) {
-                courseIds.push($(this).attr('id'));
-                console.log(courseIds);
-                courseCounter++;
+                resourceIds.push($(this).attr('id'));
+                console.log(resourceIds);
+                resourceCounter++;
             }
         });
 
-        if (courseCounter == 0) {
-            $('.courses_cards').empty();
-            $('.courses_cards').append('Select One course or refresh the page');
+        if (resourceCounter == 0) {
+            // $('.courses_cards').empty();
+            // $('.courses_cards').append('No Data Found');
         } else {
-            fetchCause(courseIds);
+            getCause(resourceIds);
         }
     });
 });
 
-function fetchCause(ids){
+function getCause(ids){
 
     $.ajax({
         type: 'GET',
-        url:'/getCourses',
-        data:{id:ids},
+        url:'/getCoursesfromResource',
+        data:{ids:ids},
         success:function(response){
             var response = JSON.parse(response);
             console.log(response);
 
             if (response.length == 0) {
-                $('.courses_cards').append('No Data Found');
+                // $('.courses_cards').append('No Data Found');
             } else {
                 response.forEach(element => {
                     $('.courses_cards').append(`

@@ -1,0 +1,19 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Bevy Labs//Bevy//
+BEGIN:VEVENT
+SUMMARY:UiPath Apps
+DTSTART;VALUE=DATE-TIME:20211120T113000Z
+DTEND;VALUE=DATE-TIME:20211120T124500Z
+DTSTAMP;VALUE=DATE-TIME:20211119T102756Z
+UID:2021-11-19T10:27:56.934906/Bevy
+DESCRIPTION:Join this session to learn about UiPath Apps. This session is 
+ for those participating in Automatathon\, organized in association with Te
+ chfest\, IIT Bombay. Session is however open for anyone wants to learn abo
+ ut UiPath Apps\n\nVirtual event URL: https://community.uipath.com/j/84agg6
+ 28qj8am/
+ORGANIZER;CN=UiPath:MAILTO:no-reply@uipath.com
+PRIORITY:5
+URL:https://community.uipath.com/j/84agg628qj8am/
+END:VEVENT
+END:VCALENDAR

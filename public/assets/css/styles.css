@@ -13,41 +13,41 @@
   position:absolute;
   top:0;
   left:0;
-  background:#fff;
+  background:#999;
   padding:10px 15px;
   display: block;
-  width:calc(100% - 40px);
+  width:100%;
   pointer-events:none;
   z-index: 20;
   height:40px;
   line-height: 40px;
   color:#999;
   border-radius: 5px 10px 10px 5px;
-  font-weight: 300;
+  /* font-weight: 300; */
 }
 .file-upload-wrapper::before{
-  content:"Upload Image";
+  content:"Browse file";
   position:absolute;
   top:0;
-  right:0;
+  
   display: inline-block;
   height:40px;
-  background: -webkit-linear-gradient(to right, #24C6DC, #514A9D);
-  background: linear-gradient(to right, #24C6DC, #514A9D);
+  background-color:rgb(165,9,220);
+  
   color:#fff;
-  font-weight: 700;
+  /* font-weight: 700; */
   z-index: 25;
   font-size: 16px;
   line-height: 40px;
   padding:0 15px;
   text-transform: uppercase;
   pointer-events: none;
-  border-radius: 0 5px 5px 0;
+  border-radius: 5px 0 0 5px;
   transition: 0.5s ease-in-out;
+  
 }
 .file-upload-wrapper:hover::before{
-  background: -webkit-linear-gradient(to right, #514A9D, #24C6DC);
-  background: linear-gradient(to right, #514A9D, #24C6DC);
+  background-color:rgb(165,9,220);
 }
 .file-upload-wrapper input{
   opacity: 0;
@@ -64,5 +64,96 @@
   cursor: pointer;
   width:100%;
 }
-
+.page-item.active .page-link {
+  z-index: 3;
+  color: #fff;
+  background-color: rgb(165,9,220);
+  border-color: rgb(165,9,220);
+}
+.text-primary {
+  color: rgb(165,9,220)!important;
+}
+.fa-edit{
+  color: rgb(165,9,220)!important;
+  font-size: 20px;
   
+}
+
+.fa-remove{
+  color: rgb(165,9,220)!important;
+  font-size: 20px;
+}
+
+.fa-undo{
+  color: rgb(165,9,220)!important;
+  font-size: 20px;
+}
+
+.page-link {
+  position: relative;
+  display: block;
+  padding: .5rem .75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: rgb(165,9,220);
+  background-color: #fff;
+  border: 1px solid #dddfeb;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: rgb(165,9,220);
+  border-color: rgb(165,9,220);
+}
+
+.main-area-user{
+  width: 66.66%;
+}
+
+@media only screen and (max-width: 600px) {
+  
+  .card{
+    width: 25%;
+  }
+}
+@media only screen and (max-width: 768px) {
+  
+  .card{
+    width: 75%;
+  }
+}
+@media only screen and (max-width: 992px) {
+  
+  .card{
+    width: 50%;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  
+  .card{
+    width: 100%;
+  }
+}
+
+.card {
+  position: relative;
+  display: flex-none;
+  flex-direction: column;
+  min-width: 0; 
+  height: $card-height;
+  word-wrap: break-word;
+  background-color: $card-bg;
+  background-clip: border-box;
+  border:1px;
+  @include border-radius($card-border-radius);
+}
+
+.edit-center{
+  text-align: center;
+}
+
+.login-pass{
+  color:red;width:75%; margin: auto;border: none;
+}
+

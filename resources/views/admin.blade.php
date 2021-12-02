@@ -11,11 +11,12 @@
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
+    <link rel="stylesheet" href="{{asset('assets/css/app.css')}}">
 </head>
 
 <body id="page-top">
     <div id="wrapper">
-        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion p-0" style="background-color: rgb(10,48,157);">
+        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion p-0" style="background-color: rgb(76,10,98);">
             <div class="container-fluid d-flex flex-column p-0">
                 <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                     <div class="sidebar-brand-text"></div>
@@ -33,19 +34,19 @@
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
                 <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
-                    <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button><img style="background-image: url(&quot;https://www.globaledulink.co.uk/wp-content/uploads/2020/10/gel_log.png&quot;);background-repeat: no-repeat;background-size: contain;width: 154px;height: 54px;border: none;"></div>
-                    <h6>Hello {{session('userName')}} !</h6>
-                    <a href="/logout"><i class="fa fa-sign-out" aria-hidden="true" style="color: rgb(0,30,255);font-size: 30px;" ></i></a>
+                    <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button><img class="top-bar-img" style="background-image: url(&quot;https://www.globaledulink.co.uk/wp-content/uploads/2020/10/gel_log.png&quot;);"></div>
+                   
+                    <a href="/logout"><i class="fa fa-sign-out" aria-hidden="true" style="color: rgb(165,9,220);font-size: 30px;" ></i></a>
                 </nav>
                 <div class="container-fluid">
                     <div class="d-sm-flex justify-content-between align-items-center mb-4">
                         <h3 class="text-dark mb-0">Dashboard</h3>
-                        <!-- <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a> -->
-                    </div>
+                      </div>
                     <div class="row">
                         <div class="col-md-6 col-xl-3 mb-4">
                             <div class="card shadow border-left-primary py-2">
-                                <div class="card-body">
+                                <a href="courses">
+                                <div class="card-body" >
                                     <div class="row align-items-center no-gutters">
                                         <div class="col mr-2">
                                             <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>&nbsp;courses</span></div>
@@ -54,10 +55,12 @@
                                         <div class="col-auto"><i class="fas fa-book-reader fa-2x text-gray-300"></i></div>
                                     </div>
                                 </div>
+                                </a>
                             </div>
                         </div>
                         <div class="col-md-6 col-xl-3 mb-4">
                             <div class="card shadow border-left-success py-2">
+                                <a href="awards">
                                 <div class="card-body">
                                     <div class="row align-items-center no-gutters">
                                         <div class="col mr-2">
@@ -67,10 +70,12 @@
                                         <div class="col-auto"><i class="fas fa-award fa-2x text-gray-300"></i></div>
                                     </div>
                                 </div>
+                                </a>
                             </div>
                         </div>
                         <div class="col-md-6 col-xl-3 mb-4">
                             <div class="card shadow border-left-info py-2">
+                                <a href="resources">
                                 <div class="card-body">
                                     <div class="row align-items-center no-gutters">
                                         <div class="col mr-2">
@@ -84,6 +89,7 @@
                                         <div class="col-auto"><i class="fas fa-clipboard-list fa-2x text-gray-300"></i></div>
                                     </div>
                                 </div>
+                                </a>
                             </div>
                         </div>
                         <div class="col-md-6 col-xl-3 mb-4">

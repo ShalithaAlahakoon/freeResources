@@ -17,8 +17,9 @@ class CreateResourcesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('url');
-            $table->string('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->string('course_id')->references('id')->on('courses')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

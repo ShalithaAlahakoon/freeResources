@@ -17,7 +17,7 @@ class awardController extends Controller
     function getAll()
     {
         $data = Award::all();
-         return view('addCourse',['awards'=>$data]);
+        return view('addCourse',['awards'=>$data]);
     }
 
     function addCourse(Request $req)
@@ -25,16 +25,12 @@ class awardController extends Controller
         $req->validate(
             [
                 'name' => "required ",
-                
             ]
         );
-
         $Award = new Award;
         $Award->name = $req -> name;
         $Award->save();
-      
         return redirect('awards');
-
     }
 
     function deleteAward($id)
@@ -45,16 +41,14 @@ class awardController extends Controller
      }
 
      function findAwardByID($id)
-   {
-         
-         $data=  Award::find($id);
-         return view('editAward',['data'=>$data]);
+    {
+        $data=  Award::find($id);
+        return view('editAward',['data'=>$data]);
         
     }
 
     function updateAward(Request $req)
-    {
-        
+    { 
         $award = Award::find($req->id);
         $award->name = $req->name;
         $award->update();
@@ -64,9 +58,22 @@ class awardController extends Controller
     public function searchAwards()
     {
         $awards = \Input::get('awards');
-
         $courses = \Course::whereIn('award', $awards)->get();
-
         return \View::make('admin.empty')->with('courses',$courses);
     }
+
+    //view all deleted record data
+    function deletedAwards(){
+        $Award = Award::select("*");
+        $Award = $Award->onlyTrashed();
+        $Award = $Award->paginate(8);
+        return view('deletedAwards',['Award'=>$Award]);
+    }
+
+    //restore specific deleted record
+    public function restore($id)
+    {
+        Award::withTrashed()->find($id)->restore();
+        return back();
+    } 
 }

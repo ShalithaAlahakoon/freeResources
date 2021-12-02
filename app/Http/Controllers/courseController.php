@@ -17,13 +17,13 @@ class courseController extends Controller
          return view('courses',['courses'=>$data,'awards'=>$AwordData]);
     }
     
-
     function addCourse(Request $req)
     {
         $req->validate(
             [
                 'name' => "required ",
-                'price' => "required "
+                'price' => "required ",
+                'image'=>"image"
             ]
         );
         if($file = $req->file('image')){
@@ -38,41 +38,23 @@ class courseController extends Controller
                 $course->url = $fileName;
                 $course->save();
                 return redirect('courses');
-                
-                
             }
         }
     }
 
     function deleteCourse($id)
     {
-          $data=Course::find($id);
-          $data->delete();
-          return  redirect('courses');
+        $data=Course::find($id);
+        $data->delete();
+        return  redirect('courses');
      }
 
      function findCourseByID($id)
    {
-         
          $data=  Course::find($id);
          return view('editCourse',['data'=>$data]);
     }
 
-    // function SerchCourseByAwardId($id)
-    // {
-    //       echo   $awards; 
-            
-    //     //   $courses[]=  DB::table('courses')->whereIn('award_id',$awards)->get();
-    //     //   return view('user',['courses'=>$courses]);
-    //     // return response()->json([
-    //     //     'success' => 'yes',
-    //     //   ]);
-    //     $data = DB::table('courses')->selectRaw('(Select course_name from courses where award_id = awards.id) as courseName')->whereRaw('award_id IN ('.$id.')')->get();
-
-    //     echo json_encode($data);
-    //  }
-
-    
     function getCoursesByAwardingId(Request $request){
         $input = $request->all();
         \Log::info($input);
@@ -88,14 +70,19 @@ class courseController extends Controller
         echo json_encode($data);
         exit;
     }
+    function getCoursesfromResource(Request $request){
+        $input = $request->all();
+        \Log::info($input);
+        $data = DB::table('courses')->whereIn('resource_type',$input['ids'])->get();
+        echo json_encode($data);
+        exit;
+    }
     
     
     function updateCourse(Request $req)
     {
-        
         if($file = $req->file('image')){
             $fileName = $file->getClientOriginalName();
-
             if($file->move('img',$fileName)){
                 $course = Course::find($req->id);
                 $course->course_name = $req -> name;
@@ -112,11 +99,23 @@ class courseController extends Controller
                 $course->price = $req -> price;
                 $course->resource_type = $req -> rType;
                 $course->award_id = $req -> awards;
-                
                 $course->update();
                 return  redirect('courses');
         }
         
         
     }
+
+    function deletedeCourses(Request $req){
+        $courses = Course::select("*");
+        $courses = $courses->onlyTrashed();
+        $courses = $courses->paginate(8);
+        return view('deletedeCourses',['courses'=>$courses]);
+    }
+
+    public function restore($id)
+    {
+        Course::withTrashed()->find($id)->restore();
+        return back();
+    } 
 }

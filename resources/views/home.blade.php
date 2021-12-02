@@ -7,6 +7,7 @@
     <title>free resources</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="{{asset('assets/css/styles.css')}}">
 </head>
 
 <body >
@@ -64,8 +65,8 @@
             <span style="color:red;"> @error('user'){{$message}} @enderror</span>
         </div>
         <div class="form-group">
-            <input type="password" class="form-control"  name="password" id="InputEmail1"  placeholder="Password" style="width:75%; margin: auto; ">
-            <span style="color:red;"> @error('password'){{$message}} @enderror</span><br>
+            <input type="password" class="form-control"  name="password" id="password"  placeholder="Password" style="width:75%; margin: auto; ">
+            @error('password')<span  class="form-control login-pass"> {{$message}}</span> @enderror<br>
         </div>
 
         <div  style="margin: auto; text-align: center;">

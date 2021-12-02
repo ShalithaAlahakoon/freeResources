@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $(document).on('click', '.category_checkbox', function () {
+    $(document).on('click', '.award_checkbox', function () {
 
         var ids = [];
 
@@ -7,7 +7,7 @@ $(document).ready(function() {
        
         $('.courses_cards').empty();
 
-        $('.category_checkbox').each(function () {
+        $('.award_checkbox').each(function () {
             if ($(this).is(":checked")) {
                 ids.push($(this).attr('id'));
                 counter++;
@@ -17,32 +17,35 @@ $(document).ready(function() {
         
         if (counter == 0) {
             $('.courses').empty();
-            $('.courses').append('No Data Found');
+            $('.courses').append('Select one awarding body or refresh the page');
         } else {
-            fetchCauseAgainstCategory(ids);
+            fetchCauseAgainstAward(ids);
         }
     });
 });
 
-function fetchCauseAgainstCategory(id) {
-
+function fetchCauseAgainstAward(ids) {
+    console.log(ids);
     $('.courses').empty();
 
     $.ajax({
         type: 'GET',
         url: '/getCoursesByAwardingId',
-        data:{id:id},
+        data:{id:ids},
         success: function (response) {
             var response = JSON.parse(response);
             console.log(response);
             
             if (response.length == 0) {
                 $('.courses').append('No Data Found');
+                $('.courses_cards').empty();
+                $('.courses_cards').append('Thid type of courses are not available or you cleared the filter.Plese select check box or refresh the page to see all courses');
             } else {
                 response.forEach(element => {
                     $('.courses_cards').append(`
-                    <div class="card " style="width:230px; height:300; border-radius: 20px;margin: 5px; float:left">
-                        <img class="card-img-top" src="img/${element.url}" alt="" style="border-radius: 15px 15px 0 0;"> <br>
+                   
+                    <div class="card col-lg-3 col-md-3 col-sm-6" style="float:left" >
+                        <img class="card-img-top" src="img/${element.url}" alt="" > <br>
                         <h6 style="margin:auto;">${element.course_name}</h6> <br>
 
                         <div  style="margin: auto; text-align: center;">
@@ -51,9 +54,10 @@ function fetchCauseAgainstCategory(id) {
                         </div>
                     </div>
                     `);
+                    
                     $('.courses').append(`
-                        <div class="custom-control  custom-checkbox course_checkebox">
-                            <input type="checkbox"  attr-name="${element.course_name}" class="custom-control-input course_checkbox" id="${element.id}">
+                        <div class="custom-control  custom-checkbox ">
+                            <input type="checkbox"  attr-name="${element.course_name}" class="custom-control-input courses_checkbox" id="${element.id}">
                             <label class="custom-control-label" for="${element.id}">${element.course_name}</label>
                         </div>
                                                              
